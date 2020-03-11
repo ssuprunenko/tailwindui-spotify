@@ -3,7 +3,7 @@
     <div class="flex h-screen overflow-hidden bg-gray-900">
       <Sidebar />
 
-      <div class="flex flex-col flex-1 w-0 overflow-hidden">
+      <div class="flex flex-col flex-1 w-0 px-4 overflow-hidden sm:px-6 lg:px-8">
         <Navbar />
 
         <main class="relative z-0 flex-1 py-6 overflow-y-auto focus:outline-none" tabindex="0">

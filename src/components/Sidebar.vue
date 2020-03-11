@@ -18,31 +18,53 @@
 
       <div class="flex flex-col flex-1 h-0 overflow-y-auto">
         <nav class="flex-1 px-2">
-          <router-link to="/" class="flex items-center px-4 py-2 text-sm font-semibold leading-5 tracking-wider text-white bg-gray-800 rounded group focus:outline-none">
-            <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 mr-4 text-white">
-              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-            </svg>
-            Home
+          <router-link
+            v-slot="{ href, navigate, isExactActive }"
+            to="/"
+            class="flex items-center px-4 py-2 text-sm font-semibold leading-5 tracking-wider rounded group focus:outline-none"
+          >
+            <a :href="href" :class="linkClass(isExactActive)" @click="navigate">
+              <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 mr-4 text-white">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+              </svg>
+              Home
+            </a>
           </router-link>
 
-          <router-link to="/browse" class="flex items-center px-4 py-2 text-sm font-semibold leading-5 tracking-wider text-gray-400 transition duration-150 ease-in-out rounded group hover:text-white focus:outline-none focus:text-white">
-            <svg
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              class="w-6 h-6 mr-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-              />
-            </svg>
-            Browse
+          <router-link
+            v-slot="{ href, navigate, isActive }"
+            to="/browse"
+            class="flex items-center px-4 py-2 text-sm font-semibold leading-5 tracking-wider transition duration-150 ease-in-out rounded group focus:outline-none focus:text-white"
+          >
+            <a :href="href" :class="linkClass(isActive)" @click="navigate">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-6 h-6 mr-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                />
+              </svg>
+              Browse
+            </a>
           </router-link>
         </nav>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    linkClass (isActive) {
+      return isActive ? 'text-white bg-gray-800' : 'text-gray-300 hover:text-white'
+    }
+  }
+}
+</script>
