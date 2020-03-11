@@ -1,32 +1,30 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="font-sans">
+    <div class="flex h-screen overflow-hidden bg-gray-900">
+      <Sidebar />
+
+      <div class="flex flex-col flex-1 w-0 overflow-hidden">
+        <Navbar />
+
+        <main class="relative z-0 flex-1 py-6 overflow-y-auto focus:outline-none" tabindex="0">
+          <router-view />
+        </main>
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Sidebar from '@/components/Sidebar.vue'
+import Navbar from '@/components/Navbar.vue'
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
+  components: {
+    Sidebar,
+    Navbar
+  }
 }
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style src="./assets/styles/index.css"></style>
