@@ -14,12 +14,12 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/max-attributes-per-line': [
-      "error",
+      'error',
       {
-        "singleline": 4,
-        "multiline": {
-          "max": 1,
-          "allowFirstLine": false
+        singleline: 4,
+        multiline: {
+          max: 1,
+          allowFirstLine: false
         }
       }
     ]

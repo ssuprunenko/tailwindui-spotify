@@ -1,5 +1,7 @@
 # tailwindui-spotify
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/78075359-d8d2-44bd-a66b-814de4311d2a/deploy-status)](https://app.netlify.com/sites/tailwindui-spotify/deploys)
+
 ## Project setup
 ```
 npm install
