@@ -36,7 +36,7 @@
         </a>
 
         <!-- Forward -->
-        <a href="#" class="mr-4 text-gray-600" title="Go forward" @click.prevent="$router.forward()">
+        <a href="#" class="mr-4 text-gray-400" title="Go forward" @click.prevent="$router.forward()">
           <svg
             fill="none"
             viewBox="0 0 24 24"
@@ -79,33 +79,47 @@
     </div>
 
     <div class="flex items-center ml-4 md:ml-6">
-      <div class="relative ml-3">
+      <div v-click-outside="closeUserMenu" class="relative ml-3">
         <div>
           <button
-            class="flex items-center max-w-xs py-1 pl-1 pr-2 text-sm text-white bg-gray-800 rounded-full focus:outline-none focus:shadow-outline"
-            @click="open = !open"
+            class="flex items-center max-w-xs p-1 text-sm text-white bg-black rounded-full hover:bg-gray-800 md:pr-2 focus:outline-none focus:bg-gray-800"
+            @click="toggleUserMenu"
           >
             <img
               class="w-6 h-6 rounded-full"
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt="Tom Cook"
             >
-            <p class="ml-2 text-xs font-medium leading-5 text-white">
+            <p class="hidden ml-2 text-xs font-medium leading-5 text-white md:block">
               Tom Cook
             </p>
-            <svg v-if="open" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2">
+            <svg v-if="open" viewBox="0 0 20 20" fill="currentColor" class="hidden w-5 h-5 ml-2 md:block">
               <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
             </svg>
-            <svg v-else viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2">
+            <svg v-else viewBox="0 0 20 20" fill="currentColor" class="hidden w-5 h-5 ml-2 md:block">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
           </button>
         </div>
         <div v-show="open" class="absolute right-0 min-w-full mt-2 origin-top-right rounded-md shadow-lg">
-          <div class="py-1 bg-gray-800 rounded-md shadow-xs">
-            <a href="#" class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700">Account</a>
-            <a href="#" class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700">Settings</a>
-            <a href="#" class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700">Log out</a>
+          <div class="bg-gray-800 rounded-md shadow-xs">
+            <div>
+              <a
+                href="#"
+                class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700 focus:outline-none focus:text-gray-200 focus:bg-gray-700"
+              >Account</a>
+              <a
+                href="#"
+                class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700 focus:outline-none focus:text-gray-200 focus:bg-gray-700"
+              >Settings</a>
+            </div>
+            <div class="border-t border-gray-700" />
+            <div>
+              <a
+                href="#"
+                class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700 focus:outline-none focus:text-gray-200 focus:bg-gray-700"
+              >Log out</a>
+            </div>
           </div>
         </div>
       </div>
@@ -118,6 +132,25 @@ export default {
   data () {
     return {
       open: false
+    }
+  },
+  created () {
+    const onEscape = (e) => {
+      if (this.open && e.keyCode === 27) {
+        this.closeUserMenu()
+      }
+    }
+    document.addEventListener('keydown', onEscape)
+    this.$once('hook:destroyed', () => {
+      document.removeEventListener('keydown', onEscape)
+    })
+  },
+  methods: {
+    toggleUserMenu () {
+      this.open = !this.open
+    },
+    closeUserMenu () {
+      this.open = false
     }
   }
 }
