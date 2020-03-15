@@ -3,7 +3,7 @@
     <section>
       <div>
         <h2 class="text-2xl font-semibold text-white">
-          Recently played
+          Settings
         </h2>
       </div>
     </section>

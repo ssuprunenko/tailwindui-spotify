@@ -19,7 +19,13 @@
     <div class="flex justify-between flex-1">
       <div class="flex items-center flex-1">
         <!-- Back -->
-        <a href="#" class="mr-4 text-white" title="Go back" @click.prevent="$router.back()">
+        <a
+          href=""
+          class="mr-4"
+          :class="[canGoBack ? 'text-white' : 'text-gray-400 cursor-not-allowed']"
+          title="Go back"
+          @click.prevent="goBack"
+        >
           <svg
             fill="none"
             viewBox="0 0 24 24"
@@ -36,7 +42,13 @@
         </a>
 
         <!-- Forward -->
-        <a href="#" class="mr-4 text-gray-400" title="Go forward" @click.prevent="$router.forward()">
+        <a
+          href=""
+          class="mr-4"
+          :class="[canGoForward ? 'text-white' : 'text-gray-400 cursor-not-allowed']"
+          title="Go forward"
+          @click.prevent="goForward"
+        >
           <svg
             fill="none"
             viewBox="0 0 24 24"
@@ -104,14 +116,19 @@
         <div v-show="open" class="absolute right-0 min-w-full mt-2 origin-top-right rounded-md shadow-lg">
           <div class="bg-gray-800 rounded-md shadow-xs">
             <div>
-              <a
-                href="#"
+              <router-link
+                to="/settings"
                 class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700 focus:outline-none focus:text-gray-200 focus:bg-gray-700"
-              >Account</a>
+              >
+                Settings
+              </router-link>
               <a
-                href="#"
+                href="https://github.com/ssuprunenko/tailwindui-spotify"
                 class="block px-5 py-1 text-sm leading-loose text-gray-300 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-200 hover:bg-gray-700 focus:outline-none focus:text-gray-200 focus:bg-gray-700"
-              >Settings</a>
+                target="_blank"
+              >
+                Source Code
+              </a>
             </div>
             <div class="border-t border-gray-700" />
             <div>
@@ -131,18 +148,20 @@
 export default {
   data () {
     return {
-      open: false
+      open: false,
+      canGoBack: false,
+      canGoForward: false
     }
   },
   created () {
-    const onEscape = (e) => {
-      if (this.open && e.keyCode === 27) {
-        this.closeUserMenu()
-      }
-    }
-    document.addEventListener('keydown', onEscape)
+    document.addEventListener('keydown', this.onEscape)
     this.$once('hook:destroyed', () => {
-      document.removeEventListener('keydown', onEscape)
+      document.removeEventListener('keydown', this.onEscape)
+    })
+
+    this.$router.afterEach((_to, _from) => {
+      this.canGoBack = this.$routerHistory.hasPrevious()
+      this.canGoForward = this.$routerHistory.hasForward()
     })
   },
   methods: {
@@ -151,6 +170,21 @@ export default {
     },
     closeUserMenu () {
       this.open = false
+    },
+    onEscape (e) {
+      if (this.open && e.keyCode === 27) {
+        this.closeUserMenu()
+      }
+    },
+    goBack () {
+      if (this.canGoBack) {
+        this.$router.back()
+      }
+    },
+    goForward () {
+      if (this.canGoForward) {
+        this.$router.forward()
+      }
     }
   }
 }
